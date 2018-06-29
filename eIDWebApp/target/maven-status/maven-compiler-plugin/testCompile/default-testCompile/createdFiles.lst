@@ -1,0 +1,10 @@
+gr/uagean/dsIss/controllers/TestViewControllers$SaveJSONPOSTConfig.class
+gr/uagean/dsIss/controllers/TestRestControllers$SaveJSONPOSTConfig.class
+gr/uagean/dsIss/utils/TestJwtUtils.class
+gr/uagean/dsIss/DsIssApplicationTests.class
+gr/uagean/dsIss/controllers/TestViewControllers.class
+gr/uagean/dsIss/service/TestEidasPropertiesService.class
+gr/uagean/dsIss/controllers/TestRestControllers.class
+gr/uagean/dsIss/service/TestKeyStoreService.class
+gr/uagean/dsIss/utils/TestISSResponseParser.class
+gr/uagean/dsIss/utils/TestWrappers.class
