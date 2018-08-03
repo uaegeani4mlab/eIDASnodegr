@@ -7,9 +7,12 @@ package gr.uagean.dsIss.utils;
 
 import gr.uagean.dsIss.model.pojo.IssAttribute;
 import gr.uagean.dsIss.model.pojo.IssAttributeList;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
@@ -27,4 +30,19 @@ public class Wrappers {
         return issAttrList;
     }
 
+    
+    public static Map<String,String> cleanAttributes( Map<String, String> jsonMap, String attributesString) throws IndexOutOfBoundsException, IOException{
+         
+            Map<String, String> cleanMap = new HashMap();
+            final String requestedAttributes =
+                    StringUtils.deleteWhitespace(attributesString).toLowerCase();
+            jsonMap.forEach( (key,value)->{
+                if(requestedAttributes.contains(key.toLowerCase())){
+                    cleanMap.put(key, value);
+                }
+            });
+            return cleanMap;
+    }
+    
+    
 }

@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: gr.uagean.dsIss.DsIssApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.326 sec - in gr.uagean.dsIss.DsIssApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.005 sec - in gr.uagean.dsIss.DsIssApplicationTests

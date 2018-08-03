@@ -45,13 +45,13 @@ public class ParameterServiceImpl implements ParameterService {
         InputStream input = null;
         HashMap<String, String> map = new HashMap();
         try {
-            input = new FileInputStream("/webappConfig/config.properties");
+            input = new FileInputStream("/webappConfig/config2.properties");
             prop.load(input);
             prop.forEach((key, value) -> {
                 map.put((String) key, (String) value);
             });
         } catch (IOException ex) {
-            log.info("Properties file not found in /webappConfig/config.properties", ex);
+            log.info("Properties file not found in /webappConfig/config2.properties", ex);
         } finally {
             if (input != null) {
                 try {

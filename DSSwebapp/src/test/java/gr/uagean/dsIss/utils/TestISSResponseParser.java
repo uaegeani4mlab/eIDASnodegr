@@ -17,15 +17,26 @@ import org.junit.Test;
  * @author nikos
  */
 public class TestISSResponseParser {
-    
+
     @Test
-    public void testIssResponse() throws IndexOutOfBoundsException, IOException{
+    public void testIssResponse() throws IndexOutOfBoundsException, IOException {
         String responseString = "{\"http://eidas.europa.eu/attributes/naturalperson/CurrentGivenName\":{\"value\":\"javier\",\"complex\":\"0\",\"required\":\"1\"},\"http://eidas.europa.eu/attributes/naturalperson/CurrentFamilyName\":{\"value\":\"Garcia\",\"complex\":\"0\",\"required\":\"1\"},\"http://eidas.europa.eu/attributes/naturalperson/DateOfBirth\":{\"value\":\"1965-01-01\",\"complex\":\"0\",\"required\":\"1\"},\"http://eidas.europa.eu/attributes/naturalperson/PersonIdentifier\":{\"value\":\"GR/GR/12345\",\"complex\":\"0\",\"required\":\"1\"}}";
-        Map<String,String> parsedResponse = IssResponseParser.parse(responseString);
-        assertEquals(parsedResponse.get("currentGivenName"),"javier");
-        assertEquals(parsedResponse.get("personIdentifier"),"GR/GR/12345");
-        assertEquals(parsedResponse.get("eid"),"GR/GR/12345");
+        Map<String, String> parsedResponse = IssResponseParser.parse(responseString);
+        assertEquals(parsedResponse.get("currentGivenName"), "javier");
+        assertEquals(parsedResponse.get("personIdentifier"), "GR/GR/12345");
+        assertEquals(parsedResponse.get("eid"), "GR/GR/12345");
     }
-    
-    
+
+    @Test
+    public void testCleanAttributes() throws IndexOutOfBoundsException, IOException {
+        String responseString = "{\"http://eidas.europa.eu/attributes/naturalperson/CurrentGivenName\":{\"value\":\"javier\",\"complex\":\"0\",\"required\":\"1\"},\"http://eidas.europa.eu/attributes/naturalperson/CurrentFamilyName\":{\"value\":\"Garcia\",\"complex\":\"0\",\"required\":\"1\"},\"http://eidas.europa.eu/attributes/naturalperson/DateOfBirth\":{\"value\":\"1965-01-01\",\"complex\":\"0\",\"required\":\"1\"},\"http://eidas.europa.eu/attributes/naturalperson/PersonIdentifier\":{\"value\":\"GR/GR/12345\",\"complex\":\"0\",\"required\":\"1\"}}";
+        Map<String, String> jsonMap = IssResponseParser.parse(responseString);
+        String attributes = "Current Given Name,Date Of Birth";
+        Map<String, String> cleaned = Wrappers.cleanAttributes(jsonMap, attributes);
+        assertEquals(cleaned.get("dateOfBirth"), "1965-01-01");
+        assertEquals(cleaned.get("currentGivenName"), "javier");
+        assertEquals(cleaned.get("personIdentifier"), null);
+        assertEquals(cleaned.get("perso1123nIdentifier"), null);
+    }
+
 }

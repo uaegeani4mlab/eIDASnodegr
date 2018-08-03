@@ -10,6 +10,7 @@ import gr.uagean.dsIss.service.ParameterService;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,9 +49,37 @@ public class EidasPropertiesServiceImpl implements EidasPropertiesService {
             throw new NullPointerException("properties string was empty");
         }
     }
+    
+    
+    public List<String> getStorkProperties() throws NullPointerException {
+        String properties = paramServ.getParam(PROPERTIES_PARAMETERS);
+        if (properties != null && properties.length() > 0) {
+            return Arrays.stream(properties.split(",")).map(property -> {
+                switch (property) {
+                    case "CurrentFamilyName":
+                        return "http://eidas.europa.eu/attributes/naturalperson/CurrentFamilyName";
+                    case "CurrentGivenName":
+                        return "http://eidas.europa.eu/attributes/naturalperson/CurrentGivenName";
+                    case "DateOfBirth":
+                        return "http://eidas.europa.eu/attributes/naturalperson/DateOfBirth";
+                    case "PersonIdentifier":
+                        return "http://eidas.europa.eu/attributes/naturalperson/PersonIdentifier";
+                    default:
+                        return property;
+                }
+            }).collect(Collectors.toList());
+        } else {
+            throw new NullPointerException("properties string was empty");
+        }
+    }
+    
+    
 
     @Override
     public List<String> getNaturalProperties() throws NullPointerException {
+        if(!StringUtils.isEmpty(paramServ.getParam("STORK")) && Boolean.parseBoolean(paramServ.getParam("STORK"))){
+            return getStorkProperties();
+        }
         return getEidasProperties().stream().filter( prop ->{
             return prop.contains("naturalperson");
         }).map(prop ->{

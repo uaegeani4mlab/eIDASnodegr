@@ -5,6 +5,7 @@
  */
 package gr.uagean.dsIss.controllers;
 
+import gr.uagean.dsIss.model.pojo.AttributeSelection;
 import gr.uagean.dsIss.model.pojo.IssAttributeList;
 import gr.uagean.dsIss.model.pojo.IssErrorResponse;
 import gr.uagean.dsIss.model.pojo.ResponseForISS;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
+import java.util.HashMap;
 import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -28,6 +30,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -70,6 +74,15 @@ public class RestControllers {
         return Wrappers.wrapEidasPropsToIssAttrs(propServ.getEidasProperties());
     }
 
+    @PostMapping("/selectAttributes")
+    public @ResponseBody
+    String selectAttributes(@RequestBody AttributeSelection attributes) {
+        log.info("received:" + attributes.getAttributes() + " token " + attributes.getToken());
+        cacheManager.getCache("attributes").evict(attributes.getToken());
+        cacheManager.getCache("attributes").put(attributes.getToken(), attributes.getAttributes());
+        return "OK";
+    }
+
     @RequestMapping(value = "/issResponse", method = {RequestMethod.POST, RequestMethod.GET})
     public @ResponseBody
     ResponseForISS receiveIssResponse(
@@ -95,9 +108,22 @@ public class RestControllers {
                 return new ResponseForISS(false);
             }
 
+//            Map<String, String> jsonMap = IssResponseParser.parse(responseString);
+//            Map<String, String> cleanMap = new HashMap();
+//            final String requestedAttributes =
+//                    StringUtils.deleteWhitespace(cacheManager.getCache("attributes").get(token).get().toString()).toLowerCase();
+//            jsonMap.forEach( (key,value)->{
+//                if(requestedAttributes.contains(key.toLowerCase())){
+//                    cleanMap.put(key, value);
+//                }
+//            });
             Map<String, String> jsonMap = IssResponseParser.parse(responseString);
-            String origin = jsonMap.get("eid").contains("aegean")?"UAegean":"eIDAS";
-            String access_token = JwtUtils.getJWT(jsonMap, paramServ, keyServ,origin);
+            Map<String, String> cleanMap = Wrappers.cleanAttributes(jsonMap,
+                    cacheManager.getCache("attributes").get(token).get().toString());
+
+            
+            String origin = jsonMap.get("eid")!=null? (jsonMap.get("eid").contains("aegean") ? "UAegean" : "eIDAS"):"stork";
+            String access_token = JwtUtils.getJWT(cleanMap, paramServ, keyServ, origin);
 
             cacheManager.getCache("tokens").put(token, access_token);
             return new ResponseForISS(true);

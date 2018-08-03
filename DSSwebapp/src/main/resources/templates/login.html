@@ -36,6 +36,7 @@
 
 
         <div th:replace="header :: header">Header</div>
+        <!--<div th:text="#{greeting}"></div>-->
 
         <div class="container">
 
@@ -46,8 +47,14 @@
                     <div class="container" style="width: 90%;">
 
                         <div class="row breadCrumbs">
-                            <div class="col s12" style="font-size: larger;">
-                                STEP | <b>GO!</b>
+
+                            <div class="col s12" style="font-size: smaller;" >
+                                <a  onclick="langGR()" style="cursor: pointer">Greek</a>
+                                <a  onclick="langEN()" style="cursor: pointer; margin-left: 0.5rem;">English</a>
+                            </div>
+
+                            <div class="col s12" style="font-size: larger;" >
+                                <span th:text="#{step}">STEP | </span> <b th:text="#{step.go}">GO!</b>
                             </div>
 
                         </div>
@@ -55,15 +62,43 @@
                         <div class="row instructions">
                             <div  id="mobile" class="col s12 flow-text hide-on-large-only">
                                 <p>
-                                    <b>Identify with eIDAS eID:</b> You will now be directed to the eIDAS Network to securely identify and trustly 
-                                    provide us your main identity attributes. Review the identification attributes that will be requested  <a href="#modal1">HERE</a>
+                                    <b th:text="#{identify}">Identify with eIDAS eID:</b> 
+                                    <span th:text="#{info1}">You will now be directed to the eIDAS Network to securely identify and trustly 
+                                        provide us your main identity attributes. Review the identification attributes that will be requested
+                                    </span>  
+                                    <a href="#modal1" th:text="#{here}">HERE</a>
                                 </p>
-                                <p>
+                                <p th:text="#{info2}">
                                     The eIDAS Network will provide us with those attributes from the attribute provider you will suggest (eID-EU)
 
                                     The eIDAS Network will request your consent before sending us any information 
                                     After successful authentication you will be redirected to our service
                                 </p>
+
+
+                                <p th:text="#{attributeSelection}">
+                                    Select which attributes will  be included in your signature:
+                                </p>
+                                <form name="attributes" id="attributes"  action="#" style="margin-bottom: 2rem;">
+                                    <th:block th:each="attr : ${natural}">
+                                        <p>
+                                            <label>
+                                                <input type="checkbox" th:id="${attr}" th:value="${attr}"/>
+                                                <label th:for="${attr}" th:text="${attr}">label 1</label>
+                                            </label>
+                                        </p>
+                                    </th:block>
+                                    <th:block th:each="attr : ${legal}">
+                                        <p>
+                                            <label>
+                                                <input type="checkbox" th:id="${attr}" th:value="${attr}"/>
+                                                <label th:for="${attr}" th:text="${attr}">label 1</label>
+                                            </label>
+                                        </p>
+                                    </th:block>
+                                </form>
+
+
 
 
                                 <div class="row">
@@ -79,7 +114,7 @@
                                             </th:block>
 
                                         </select>
-                                        <label>Select Your Country of Origin</label>
+                                        <label th:text="#{select}">Select Your Country of Origin</label>
                                     </div>
 
                                     <div class="input-field col s12" style="display:none">
@@ -124,16 +159,39 @@
                             </div>
                             <div   class="col s12  hide-on-med-and-down ">
                                 <p>
-                                    <b>Identify with eIDAS eID:</b> You will now be directed to the eIDAS Network to securely identify and trustly 
-                                    provide us your main identity attributes. Review the identification attributes that will be requested  <a href="#modal1">HERE</a>
+                                    <b th:text="#{identify}">Identify with eIDAS eID:</b> 
+                                    <span th:text="#{info1}">You will now be directed to the eIDAS Network to securely identify and trustly 
+                                        provide us your main identity attributes. Review the identification attributes that will be requested</span>  <a href="#modal1" th:text="#{here}">HERE</a>
                                 </p>
-                                <p>
+                                <p th:text="#{info2}">
                                     The eIDAS Network will provide us with those attributes from the attribute provider you will suggest (eID-EU)
 
                                     The eIDAS Network will request your consent before sending us any information
                                     After successful authentication you will be redirected to our service
                                 </p>
 
+
+                                <p th:text="#{attributeSelection}">
+                                    Select which attributes will  be included in your signature:
+                                </p>
+                                <form name="attributes2" id="attributes2"  action="#" style="margin-bottom: 2rem;">
+                                    <th:block th:each="attr : ${natural}">
+                                        <p>
+                                            <label>
+                                                <input type="checkbox" th:id="${attr}+2" th:value="${attr}"/>
+                                                <label th:for="${attr}+2" th:text="${attr}">label 1</label>
+                                            </label>
+                                        </p>
+                                    </th:block>
+                                    <th:block th:each="attr : ${legal}">
+                                        <p>
+                                            <label>
+                                                <input type="checkbox" th:id="${attr}+2" th:value="${attr}"/>
+                                                <label th:for="${attr}+2" th:text="${attr}">label 1</label>
+                                            </label>
+                                        </p>
+                                    </th:block>
+                                </form>
 
                                 <div class="row">
 
@@ -148,7 +206,7 @@
                                             </th:block>
 
                                         </select>
-                                        <label>Select Your Country of Origin</label>
+                                        <label th:text="#{select}">Select Your Country of Origin</label>
                                     </div>
 
                                     <div class="input-field col s12" style="display:none">
@@ -162,10 +220,10 @@
                                 <div class="row">
 
                                     <div class="col s12 m12 l6">
-                                        <a class="waves-effect waves-light btn-large swell-btn cancel-btn" onclick="onCancelClick()">Cancel</a>
+                                        <a class="waves-effect waves-light btn-large swell-btn cancel-btn" onclick="onCancelClick()" th:text="#{cancel}">Cancel</a>
                                     </div>
                                     <div class="col s12 m12 l6">
-                                        <a id="next" class="waves-effect waves-light btn-large swell-btn next-btn" onclick="onNextClick()">Next</a>
+                                        <a id="next" class="waves-effect waves-light btn-large swell-btn next-btn" onclick="onNextClick()" th:text="#{next}">Next</a>
                                     </div>
                                 </div>
 
@@ -240,17 +298,32 @@
                                         });
                                         function onNextClick() {
                                         let countrySelector = $("#mobile").is(":visible")?$("#countrySelection"):$("#countrySelection2");
-                                        let country = countrySelector.val();
-                                        let iss = [[${issPreUrl}]];
-                                        if(country === "GR"){
-                                            iss = [[${issUrl}]];
-                                        }
-                                        let location = iss
-                                                + "?t=" + [[${token}]]
-                                                + "&sp=" + [[${sp}]]
-                                                + "&cc=" + country
-                                                + "&saml=eIDAS";
-                                        window.location = location;
+                                        let attrSelector = $("#mobile").is(":visible")?"attributes":"attributes2";
+                                        let res = "";
+                                        let attribuets = Array.from(document.forms[attrSelector].getElementsByTagName("input"))
+                                                .reduce(function(result, input){
+                                                let element = $(input);
+                                                if (element.is(":checked")) {
+                                                if (res === ""){ res = element.val(); }
+                                                else{res = res + "," + element.val(); }
+                                                }
+                                                });
+                                                $.ajax({ url:"selectAttributes", type: 'POST',
+                                                        contentType: 'application/json',
+                                                        data:JSON.stringify({ attributes: res, token:  [[${token}]] })
+                                                }).done(data => {
+                                                    let country = countrySelector.val();
+                                                    let iss = [[${issPreUrl}]];
+                                                    if (country === "GR"){
+                                                    iss = [[${issUrl}]];
+                                                    }
+                                                    let location = iss
+                                                            + "?t=" + [[${token}]]
+                                                            + "&sp=" + [[${sp}]]
+                                                            + "&cc=" + country
+                                                            + "&saml=eIDAS";
+                                                    window.location = location;
+                                                    });
                                         }
 
                                         function linkedInClick() {
@@ -273,6 +346,14 @@
                                         function onNextClickUAegean() {
                                         let location = "http://eidasiss.aegean.gr:8081/ISS2/ldap.jsp?t=" + [[${token}]] + "&sp=" + [[${sp}]];
                                         window.location = location;
+                                        }
+
+
+                                        function langGR(){
+                                        window.location.href = 'login?localeCode=gr';
+                                        }
+                                        function langEN(){
+                                        window.location.href = 'login?localeCode=en';
                                         }
 
                                         /*]]>*/

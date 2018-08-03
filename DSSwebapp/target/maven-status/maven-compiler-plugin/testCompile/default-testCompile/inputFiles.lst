@@ -1,8 +1,8 @@
-/home/nikos/NetbeansProjects/eIDASnodegr/eIDWebApp/src/test/java/gr/uagean/dsIss/utils/TestWrappers.java
-/home/nikos/NetbeansProjects/eIDASnodegr/eIDWebApp/src/test/java/gr/uagean/dsIss/DsIssApplicationTests.java
-/home/nikos/NetbeansProjects/eIDASnodegr/eIDWebApp/src/test/java/gr/uagean/dsIss/service/TestKeyStoreService.java
-/home/nikos/NetbeansProjects/eIDASnodegr/eIDWebApp/src/test/java/gr/uagean/dsIss/controllers/TestRestControllers.java
-/home/nikos/NetbeansProjects/eIDASnodegr/eIDWebApp/src/test/java/gr/uagean/dsIss/service/TestEidasPropertiesService.java
-/home/nikos/NetbeansProjects/eIDASnodegr/eIDWebApp/src/test/java/gr/uagean/dsIss/utils/TestISSResponseParser.java
-/home/nikos/NetbeansProjects/eIDASnodegr/eIDWebApp/src/test/java/gr/uagean/dsIss/utils/TestJwtUtils.java
-/home/nikos/NetbeansProjects/eIDASnodegr/eIDWebApp/src/test/java/gr/uagean/dsIss/controllers/TestViewControllers.java
+/home/nikos/eIDASnodegr/DSSwebapp/src/test/java/gr/uagean/dsIss/controllers/TestViewControllers.java
+/home/nikos/eIDASnodegr/DSSwebapp/src/test/java/gr/uagean/dsIss/utils/TestWrappers.java
+/home/nikos/eIDASnodegr/DSSwebapp/src/test/java/gr/uagean/dsIss/DsIssApplicationTests.java
+/home/nikos/eIDASnodegr/DSSwebapp/src/test/java/gr/uagean/dsIss/service/TestKeyStoreService.java
+/home/nikos/eIDASnodegr/DSSwebapp/src/test/java/gr/uagean/dsIss/service/TestEidasPropertiesService.java
+/home/nikos/eIDASnodegr/DSSwebapp/src/test/java/gr/uagean/dsIss/utils/TestISSResponseParser.java
+/home/nikos/eIDASnodegr/DSSwebapp/src/test/java/gr/uagean/dsIss/utils/TestJwtUtils.java
+/home/nikos/eIDASnodegr/DSSwebapp/src/test/java/gr/uagean/dsIss/controllers/TestRestControllers.java
